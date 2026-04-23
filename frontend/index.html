@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OptiWin 11 - Elite PC Care</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1>OptiWin 11</h1>
+                <p style="color: var(--text-secondary);">Elite System Optimization</p>
+            </div>
+            <div id="hardware-quick" style="text-align: right; color: var(--text-secondary); font-size: 0.8rem;">
+                Cargando hardware...
+            </div>
+        </header>
+
+        <section class="dashboard">
+            <div class="card">
+                <h3>Carga de CPU</h3>
+                <div class="value" id="cpu-val">0%</div>
+            </div>
+            <div class="card">
+                <h3>Uso de RAM</h3>
+                <div class="value" id="ram-val">0%</div>
+            </div>
+            <div class="card">
+                <h3>Basura Detectada</h3>
+                <div class="value" id="junk-val">Detectando...</div>
+            </div>
+        </section>
+
+        <section class="actions">
+            <button class="btn one-click" onclick="runTask('full_optimization')">
+                <i class="fas fa-crown"></i>
+                OPTIMIZACIÓN TOTAL (1-CLIC)
+            </button>
+            <button class="btn primary" onclick="runTask('clean')">
+                <i class="fas fa-rocket"></i>
+                Limpieza Inteligente
+            </button>
+            <button class="btn" onclick="runTask('repair')">
+                <i class="fas fa-tools"></i>
+                Reparar Sistema
+            </button>
+            <button class="btn" onclick="runTask('update')">
+                <i class="fas fa-sync-alt"></i>
+                Actualizar Todo
+            </button>
+            <button class="btn" onclick="runTask('debloat')">
+                <i class="fas fa-shield-virus"></i>
+                Eliminar Bloatware
+            </button>
+            <button class="btn" onclick="runTask('turbo')">
+                <i class="fas fa-bolt"></i>
+                Modo Turbo
+            </button>
+        </section>
+
+        <div id="progress-log"></div>
+
+        <div class="ad-banner" id="ad-box">
+            <!-- Espacio publicitario -->
+            Cargando publicidad...
+        </div>
+    </div>
+
+    <div class="status-bar" id="status-text">
+        Sistema Listo
+    </div>
+
+    <script src="static/app.js"></script>
+</body>
+</html>
