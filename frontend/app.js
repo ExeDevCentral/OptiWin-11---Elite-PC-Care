@@ -1,7 +1,75 @@
+// --- UI & Navigation Logic ---
+document.addEventListener('DOMContentLoaded', () => {
+    const navItems = document.querySelectorAll('.nav-item');
+    const panels = document.querySelectorAll('.panel');
+    const panelTitle = document.getElementById('current-panel-title');
+
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            // Remove active from all nav items
+            navItems.forEach(nav => nav.classList.remove('active'));
+            // Add active to clicked
+            item.classList.add('active');
+
+            // Hide all panels
+            panels.forEach(panel => panel.classList.remove('active'));
+            
+            // Show target panel
+            const targetId = item.getAttribute('data-target');
+            document.getElementById(targetId).classList.add('active');
+
+            // Update Header Title
+            panelTitle.innerText = item.querySelector('span').innerText;
+        });
+    });
+
+    // Carga inicial
+    updateStats();
+    updateHardware();
+    fetchAds();
+    
+    // Polling de estadísticas
+    setInterval(updateStats, 3000);
+    setInterval(fetchAds, 15000); // Rotar publicidad cada 15s
+});
+
+// --- API Interactions ---
+
+function addLog(message, type = 'info') {
+    const logContainer = document.getElementById('progress-log');
+    let cssClass = 'log-info';
+    
+    if (type === 'success') cssClass = 'log-success';
+    if (type === 'error') cssClass = 'log-error';
+    if (type === 'warning') cssClass = 'log-warning';
+    if (type === 'highlight') cssClass = 'log-highlight';
+
+    const timestamp = new Date().toLocaleTimeString();
+    logContainer.innerHTML += `<span class="${cssClass}">[${timestamp}] > ${message}</span><br>`;
+    logContainer.scrollTop = logContainer.scrollHeight;
+}
+
+function updateStatus(text, type = 'info') {
+    const statusText = document.getElementById('status-text');
+    statusText.innerText = text;
+    
+    if(type === 'error') {
+        statusText.style.backgroundColor = 'var(--danger)';
+    } else if (type === 'success') {
+        statusText.style.backgroundColor = 'var(--success)';
+        statusText.style.color = '#000';
+    } else {
+        statusText.style.backgroundColor = 'var(--accent-primary)';
+        statusText.style.color = '#fff';
+    }
+}
+
 async function updateStats() {
     try {
         const response = await fetch('/api/stats');
         const data = await response.json();
+        
+        // Update Health Check Panel stats
         document.getElementById('cpu-val').innerText = data.cpu_percent + '%';
         document.getElementById('ram-val').innerText = data.ram_percent + '%';
         document.getElementById('junk-val').innerText = data.temp_files_size;
@@ -14,11 +82,43 @@ async function updateHardware() {
     try {
         const response = await fetch('/api/hardware');
         const data = await response.json();
+        
+        // Quick Header Update
         document.getElementById('hardware-quick').innerHTML = `
-            ${data.processor} <br>
-            RAM: ${data.memory} | Batería: ${data.battery}
+            <i class="fas fa-microchip"></i> ${data.processor} | 
+            <i class="fas fa-memory"></i> ${data.memory}
         `;
-    } catch (e) {}
+
+        // Full Hardware Panel Update
+        const hwDetails = document.getElementById('hardware-full-details');
+        if (hwDetails) {
+            hwDetails.innerHTML = `
+                <div class="stat-card">
+                    <i class="fas fa-microchip"></i>
+                    <div>
+                        <h4>Procesador</h4>
+                        <div class="value" style="font-size:1.2rem">${data.processor} MHz (Max)</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-memory"></i>
+                    <div>
+                        <h4>Memoria RAM</h4>
+                        <div class="value">${data.memory}</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-battery-full"></i>
+                    <div>
+                        <h4>Energía</h4>
+                        <div class="value" style="font-size:1.2rem">${data.battery === "Desktop/AC" ? "Conectado a CA" : data.battery + "%"}</div>
+                    </div>
+                </div>
+            `;
+        }
+    } catch (e) {
+        console.error("Error updating hardware", e);
+    }
 }
 
 async function fetchAds() {
@@ -26,57 +126,64 @@ async function fetchAds() {
         const response = await fetch('/api/ads');
         const data = await response.json();
         document.getElementById('ad-box').innerHTML = `
-            ${data.text} <a href="${data.link}" target="_blank">Saber más</a>
+            <i class="fas fa-star" style="color:var(--warning)"></i> ${data.text} <br>
+            <a href="${data.link}" target="_blank">Saber más <i class="fas fa-arrow-right"></i></a>
         `;
     } catch (e) {}
 }
 
 async function runTask(endpoint) {
-    const log = document.getElementById('progress-log');
-    const status = document.getElementById('status-text');
-    
-    log.innerHTML += `> Iniciando ${endpoint}...<br>`;
-    status.innerText = `Ejecutando ${endpoint}...`;
+    addLog(`Iniciando tarea: ${endpoint}...`, 'info');
+    updateStatus('Procesando...', 'warning');
     
     try {
         const response = await fetch(`/api/${endpoint}`, { method: 'POST' });
         const result = await response.json();
         
         if (result.error) {
-            log.innerHTML += `<span style="color: #f44336">> ⚠️ Error: ${result.error}</span><br>`;
+            addLog(`Error: ${result.error}`, 'error');
+            updateStatus('Error', 'error');
         } else if (result.status) {
-            log.innerHTML += `<span style="color: #4CAF50">> ${result.status}</span><br>`;
+            addLog(result.status, 'success');
             
             // Si hay detalles de limpieza (para Optimización Total)
-            if (result.details) {
+            if (result.details && result.details.length > 0) {
                 result.details.forEach(msg => {
-                    log.innerHTML += `<span style="color: #4CAF50; font-size: 0.8rem; margin-left: 15px;">- ${msg}</span><br>`;
+                    if(msg.includes('Error') || msg.includes('denegado')) {
+                        addLog(`  - ${msg}`, 'warning');
+                    } else if(msg.includes('No encontrado') || msg.includes('Ya estaba')) {
+                         addLog(`  - ${msg}`, 'info');
+                    } else {
+                        addLog(`  - ${msg}`, 'success');
+                    }
                 });
             }
             
             // Si hay tareas en segundo plano
             if (result.background) {
-                log.innerHTML += `<span style="color: var(--accent-blue)">> ℹ️ ${result.background}</span><br>`;
+                addLog(`Info: ${result.background}`, 'highlight');
             }
+            
+            updateStatus('Completado', 'success');
+            setTimeout(() => updateStatus('Listo'), 3000);
+            
         } else if (result.results) {
             result.results.forEach(msg => {
-                log.innerHTML += `<span style="color: #4CAF50">> ${msg}</span><br>`;
+                 if(msg.includes('Error') || msg.includes('denegado')) {
+                        addLog(msg, 'warning');
+                    } else if(msg.includes('No encontrado') || msg.includes('Ya estaba')) {
+                         addLog(msg, 'info');
+                    } else {
+                        addLog(msg, 'success');
+                    }
             });
+            updateStatus('Completado', 'success');
+            setTimeout(() => updateStatus('Listo'), 3000);
         }
         
-        status.innerText = "Acción completada";
-        updateStats();
+        updateStats(); // Force refresh stats after task
     } catch (e) {
-        log.innerHTML += `<span style="color: #f44336">> ❌ Error de conexión: ${e.message}</span><br>`;
-        status.innerText = "Error en la operación";
+        addLog(`Error de conexión al servidor: ${e.message}`, 'error');
+        updateStatus('Desconectado', 'error');
     }
 }
-
-// Polling de estadísticas
-setInterval(updateStats, 3000);
-setInterval(fetchAds, 10000); // Rotar publicidad cada 10s
-
-// Carga inicial
-updateStats();
-updateHardware();
-fetchAds();

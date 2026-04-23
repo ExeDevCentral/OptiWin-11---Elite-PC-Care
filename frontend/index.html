@@ -8,69 +8,186 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">
-                <h1>OptiWin 11</h1>
-                <p style="color: var(--text-secondary);">Elite System Optimization</p>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <div>
+                        <h1>OptiWin 11</h1>
+                        <p>Elite PC Care</p>
+                    </div>
+                </div>
             </div>
-            <div id="hardware-quick" style="text-align: right; color: var(--text-secondary); font-size: 0.8rem;">
-                Cargando hardware...
+            
+            <ul class="nav-menu">
+                <li class="nav-item active" data-target="panel-health">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>Health Check</span>
+                </li>
+                <li class="nav-item" data-target="panel-clean">
+                    <i class="fas fa-broom"></i>
+                    <span>Limpieza Personalizada</span>
+                </li>
+                <li class="nav-item" data-target="panel-performance">
+                    <i class="fas fa-rocket"></i>
+                    <span>Rendimiento</span>
+                </li>
+                <li class="nav-item" data-target="panel-repair">
+                    <i class="fas fa-tools"></i>
+                    <span>Reparación & Actualización</span>
+                </li>
+                <li class="nav-item" data-target="panel-hardware">
+                    <i class="fas fa-microchip"></i>
+                    <span>Hardware Info</span>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="ad-banner" id="ad-box">
+                    Cargando publicidad...
+                </div>
             </div>
-        </header>
+        </nav>
 
-        <section class="dashboard">
-            <div class="card">
-                <h3>Carga de CPU</h3>
-                <div class="value" id="cpu-val">0%</div>
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-bar">
+                <h2 id="current-panel-title">Health Check</h2>
+                <div class="hardware-quick" id="hardware-quick">
+                    <i class="fas fa-sync fa-spin"></i> Cargando hardware...
+                </div>
+            </header>
+
+            <div class="panels-container">
+                
+                <!-- PANEL: HEALTH CHECK (One-Click) -->
+                <section class="panel active" id="panel-health">
+                    <div class="hero-section">
+                        <div class="hero-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h2>Optimización Total con 1 Clic</h2>
+                        <p class="didactic-text">
+                            <strong>¿Qué hace esto?</strong> Ejecuta un análisis inteligente que elimina archivos basura, repara archivos corruptos del sistema (SFC/DISM), actualiza tus aplicaciones vulnerables y activa el modo de máximo rendimiento. Ideal para mantenimiento semanal.
+                        </p>
+                        <button class="btn btn-giant pulse" onclick="runTask('full_optimization')">
+                            INICIAR OPTIMIZACIÓN
+                        </button>
+                    </div>
+
+                    <div class="dashboard grid-3">
+                        <div class="stat-card">
+                            <i class="fas fa-microchip"></i>
+                            <div>
+                                <h4>CPU</h4>
+                                <div class="value" id="cpu-val">0%</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-memory"></i>
+                            <div>
+                                <h4>RAM</h4>
+                                <div class="value" id="ram-val">0%</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-trash"></i>
+                            <div>
+                                <h4>Basura</h4>
+                                <div class="value" id="junk-val">0 MB</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PANEL: LIMPIEZA -->
+                <section class="panel" id="panel-clean">
+                    <div class="info-box">
+                        <i class="fas fa-info-circle"></i>
+                        <p><strong>Limpieza Inteligente:</strong> Libera espacio en disco eliminando archivos temporales de Windows, cachés de navegadores (Chrome, Edge, Brave) y vaciando la papelera de forma segura. No borra tus documentos personales.</p>
+                    </div>
+                    <div class="action-grid">
+                        <div class="action-card">
+                            <div class="action-icon"><i class="fas fa-broom"></i></div>
+                            <h3>Limpieza General</h3>
+                            <p>Elimina temporales y caché para liberar espacio de inmediato.</p>
+                            <button class="btn btn-primary" onclick="runTask('clean')">Limpiar Ahora</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PANEL: RENDIMIENTO -->
+                <section class="panel" id="panel-performance">
+                    <div class="info-box">
+                        <i class="fas fa-info-circle"></i>
+                        <p><strong>Maximiza tu Hardware:</strong> Ajusta la energía de tu PC para dar prioridad al rendimiento o elimina aplicaciones preinstaladas (Bloatware) que consumen recursos en segundo plano.</p>
+                    </div>
+                    <div class="action-grid">
+                        <div class="action-card">
+                            <div class="action-icon"><i class="fas fa-bolt"></i></div>
+                            <h3>Modo Turbo</h3>
+                            <p>Activa el plan de energía de Alto Rendimiento para juegos y diseño.</p>
+                            <button class="btn btn-primary" onclick="runTask('turbo')">Activar Turbo</button>
+                        </div>
+                        <div class="action-card">
+                            <div class="action-icon"><i class="fas fa-shield-virus"></i></div>
+                            <h3>Eliminar Bloatware</h3>
+                            <p>Desinstala apps innecesarias de Windows (Zune, Skype, Xbox, etc).</p>
+                            <button class="btn btn-primary" onclick="runTask('debloat')">Limpiar Apps</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PANEL: REPARACIÓN Y ACTUALIZACIÓN -->
+                <section class="panel" id="panel-repair">
+                    <div class="info-box warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p><strong>Atención:</strong> Estas tareas pueden tardar varios minutos y consumir recursos de red o CPU. Ideal ejecutarlas si notas lentitud, pantallazos azules o problemas de seguridad.</p>
+                    </div>
+                    <div class="action-grid">
+                        <div class="action-card">
+                            <div class="action-icon"><i class="fas fa-tools"></i></div>
+                            <h3>Reparación de Sistema</h3>
+                            <p>Ejecuta SFC y DISM para buscar y restaurar archivos críticos dañados de Windows.</p>
+                            <button class="btn btn-primary" onclick="runTask('repair')">Iniciar Reparación</button>
+                        </div>
+                        <div class="action-card">
+                            <div class="action-icon"><i class="fas fa-sync-alt"></i></div>
+                            <h3>Actualizador Universal</h3>
+                            <p>Actualiza todas tus aplicaciones instaladas (vía Winget) y busca actualizaciones de Windows.</p>
+                            <button class="btn btn-primary" onclick="runTask('update')">Buscar Actualizaciones</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PANEL: HARDWARE -->
+                <section class="panel" id="panel-hardware">
+                    <div class="info-box">
+                        <i class="fas fa-desktop"></i>
+                        <p>Resumen de las especificaciones principales de tu equipo detectadas por OptiWin.</p>
+                    </div>
+                    <div class="hardware-details" id="hardware-full-details">
+                        <!-- Llenado por JS -->
+                        <div class="stat-card"><i class="fas fa-sync fa-spin"></i> Cargando información detallada...</div>
+                    </div>
+                </section>
+
             </div>
-            <div class="card">
-                <h3>Uso de RAM</h3>
-                <div class="value" id="ram-val">0%</div>
+
+            <!-- Global Console / Log -->
+            <div class="console-area">
+                <div class="console-header">
+                    <span><i class="fas fa-terminal"></i> Registro de Actividades</span>
+                    <span class="status-badge" id="status-text">Listo</span>
+                </div>
+                <div class="console-log" id="progress-log">
+                    <span class="log-info">> Sistema inicializado y listo para optimizar.</span><br>
+                </div>
             </div>
-            <div class="card">
-                <h3>Basura Detectada</h3>
-                <div class="value" id="junk-val">Detectando...</div>
-            </div>
-        </section>
 
-        <section class="actions">
-            <button class="btn one-click" onclick="runTask('full_optimization')">
-                <i class="fas fa-crown"></i>
-                OPTIMIZACIÓN TOTAL (1-CLIC)
-            </button>
-            <button class="btn primary" onclick="runTask('clean')">
-                <i class="fas fa-rocket"></i>
-                Limpieza Inteligente
-            </button>
-            <button class="btn" onclick="runTask('repair')">
-                <i class="fas fa-tools"></i>
-                Reparar Sistema
-            </button>
-            <button class="btn" onclick="runTask('update')">
-                <i class="fas fa-sync-alt"></i>
-                Actualizar Todo
-            </button>
-            <button class="btn" onclick="runTask('debloat')">
-                <i class="fas fa-shield-virus"></i>
-                Eliminar Bloatware
-            </button>
-            <button class="btn" onclick="runTask('turbo')">
-                <i class="fas fa-bolt"></i>
-                Modo Turbo
-            </button>
-        </section>
-
-        <div id="progress-log"></div>
-
-        <div class="ad-banner" id="ad-box">
-            <!-- Espacio publicitario -->
-            Cargando publicidad...
-        </div>
-    </div>
-
-    <div class="status-bar" id="status-text">
-        Sistema Listo
+        </main>
     </div>
 
     <script src="static/app.js"></script>
