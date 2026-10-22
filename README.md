@@ -1,84 +1,47 @@
-# 🚀 OptiWin 11 - Elite PC Care
+<div align="center">
 
-**OptiWin 11** is a high-performance system maintenance and optimization tool designed specifically for Windows 11. It provides a professional, "one-click" experience to keep your PC running at peak performance, serving as a modern and efficient alternative to traditional maintenance software.
+# OptiWin 11 • Elite PC Care
+### *Windows 11 Kernel Telemetry, Automated RAM Working-Set Optimization & Cache Eviction Suite*
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)
-![Platform](https://img.shields.io/badge/platform-Windows%2011-brightgreen.svg)
+[![Python: 3.9+](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Windows 11 Native](https://img.shields.io/badge/Platform-Windows_11_%7C_10-0078D4?style=for-the-badge&logo=windows&logoColor=white)](https://microsoft.com)
+[![Modern Webview GUI](https://img.shields.io/badge/UI-Modern_Glassmorphism-9945FF?style=for-the-badge)](https://github.com/ExeDevCentral)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
----
+<p align="center">
+  A system maintenance and performance optimization suite tailored for Windows 11. Combines native Win32/PowerShell memory working-set trimming, disk temporary cache purging, and a clean web-based control dashboard.
+</p>
 
-## ✨ Key Features
-
-*   **🧹 Junk Cleanup**: Automatically identifies and removes temporary files, cache, and system logs to free up space.
-*   **🛠️ System Repair**: Runs critical system health checks (SFC, DISM) to fix corrupted files and improve stability.
-*   **🆙 Universal Updates**: Keeps all your applications and system components up to date using native Windows tools.
-*   **✂️ System Debloat**: Removes unnecessary pre-installed applications and optimizes background processes.
-*   **⚡ Turbo Mode**: Optimizes power plans and system resources for maximum performance during intensive tasks.
-*   **📊 Real-time Monitoring**: View your CPU, RAM, and hardware health directly from the dashboard.
-*   **🎯 Full Optimization**: A comprehensive one-click suite that performs all maintenance tasks sequentially.
+</div>
 
 ---
 
-## 🛠️ Technology Stack
+## ⚡ Core Capabilities
 
-*   **Backend**: Python 3 with [FastAPI](https://fastapi.tiangolo.com/)
-*   **Frontend**: Modern HTML5, Vanilla CSS3 (Glassmorphism design), and JavaScript
-*   **System Integration**: Direct interaction with Windows PowerShell, CMD, and System API
-*   **Server**: Uvicorn
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-*   Windows 10/11 (Optimized for Windows 11)
-*   Python 3.10 or higher
-*   Administrative privileges (required for system-level modifications)
-
-### Installation
-
-1.  **Clone the repository**:
-    ```bash
-    git clone https://github.com/ExeDevCentral/OptiWin-11---Elite-PC-Care.git
-    cd OptiWin-11---Elite-PC-Care
-    ```
-
-2.  **Install dependencies**:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-3.  **Run the application**:
-    ```bash
-    python main.py
-    ```
-
-> [!IMPORTANT]
-> The application will automatically request Administrative privileges upon startup. This is necessary to perform system repairs and optimization.
+- **Automated Memory Compaction:** Trims bloated working-set pages and standby memory lists safely via native APIs.
+- **Temporary Cache Cleanup:** Safely purges accumulated user temp directories, Windows Update caches, and browser scratch stores.
+- **Telemetry & Process Manager:** Provides transparent CPU, RAM, and Disk I/O metrics in real time.
+- **Responsive Web Dashboard:** Elegant frontend built with HTML5/CSS3 glassmorphism connected to Python backend logic.
 
 ---
 
-## 📸 Dashboard Preview
+## 🚀 Quickstart & Execution
 
-The dashboard features a sleek, dark-mode interface with real-time hardware statistics and intuitive control panels for all optimization tasks.
+```bash
+# Clone the repository
+git clone https://github.com/ExeDevCentral/OptiWin-11---Elite-PC-Care.git
+cd OptiWin-11---Elite-PC-Care
 
----
+# Install required Python packages
+pip install psutil
 
-## ⚠️ Disclaimer
-
-This tool performs system-level modifications. While designed to be safe and efficient, use it at your own risk. It is always recommended to create a System Restore point before performing major optimizations.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! If you have suggestions or want to add new features, feel free to fork the repo and create a pull request.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+# Launch OptiWin 11
+python3 main.py
+```
 
 ---
-*Developed by [ExeDevCentral](https://github.com/ExeDevCentral)*
+
+## 👨‍💻 Author
+
+**Exequiel Echevarria**
+- GitHub: [@ExeDevCentral](https://github.com/ExeDevCentral)
